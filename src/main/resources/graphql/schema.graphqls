@@ -1,0 +1,81 @@
+type Query {
+    towns: [Town]!
+    photos:[Photo]!
+    townsNames:Town
+    getTownById(id:ID):Town
+    photoById(id:ID!):Photo
+    photosByTownId(id:ID!):[Photo]
+}
+
+type Town {
+    townId: ID!
+    townName: String!
+    description:String!
+    photos:[Photo]
+
+}
+type Photo {
+    id: ID!
+    image: String!
+    destination: String!
+    description: String!
+    caption: String!
+    town: Town!
+}
+input PhotoInput{
+    image: String!
+    destination: String!
+    description: String!
+    caption: String!
+    town:TownInput !
+
+}
+input UpdatePhotoInput{
+
+    id: ID!
+    image: String!
+    destination: String!
+    description: String!
+    caption: String!
+    town: TownInput!
+
+}
+input TownInput{
+    townId: ID
+    townName: String!
+    description:String!
+
+}
+input TownUpdateInput{
+    townId: ID!
+    townName: String!
+    description:String!
+
+}
+type Activity{
+    activityId:ID!
+    activityName:String!
+    activityDescription:String!
+    town:Town!
+    contactNo:String!
+    address:String!
+    activityPhotos:[ActivityPhoto!]!
+}
+
+type ActivityPhoto {
+    activityPhotoId:ID!
+    image:String!
+    caption:String!
+
+}
+
+type Mutation{
+    addPhoto(input:PhotoInput):Photo!
+    addTown(input:TownInput):Town!
+    deleteTown(id:ID):Boolean!
+    deletePhoto(id:ID):Boolean!
+    updatePhoto(input:UpdatePhotoInput):Photo!
+    updateTown(input:TownUpdateInput):ID!
+
+
+}
