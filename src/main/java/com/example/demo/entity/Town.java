@@ -31,10 +31,10 @@ public class Town {
     private String description;
 
 
-    @OneToMany(mappedBy = "town", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "town", cascade = CascadeType.DETACH)
     private List<Photo> photos = new ArrayList<>();
 
-    @OneToMany(mappedBy = "town", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "town", cascade = CascadeType.DETACH)
     private List<Activity>activities=new ArrayList<>();
     /*public Town() {
 

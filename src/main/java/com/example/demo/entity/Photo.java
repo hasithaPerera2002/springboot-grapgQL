@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.UUID;
@@ -18,7 +19,7 @@ import java.util.UUID;
     public class Photo {
         @Id
         @GeneratedValue(generator = "uuid")
-        @GenericGenerator(name = "uuid-hibernate-generator", strategy = "org.hibernate.id.UUIDGenerator")
+        @Type(type="org.hibernate.type.UUIDCharType")
         private UUID photoId;
 
         @Lob
@@ -33,7 +34,7 @@ import java.util.UUID;
 
         private String caption;
 
-        @ManyToOne(cascade = CascadeType.ALL)
+        @ManyToOne(cascade = CascadeType.DETACH)
         @JoinColumn(name = "townId")
         private Town town;
 

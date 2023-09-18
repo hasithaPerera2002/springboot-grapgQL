@@ -15,7 +15,7 @@ type Town {
 
 }
 type Photo {
-    id: ID!
+    photoId: ID!
     image: String!
     destination: String!
     description: String!

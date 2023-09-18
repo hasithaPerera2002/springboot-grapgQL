@@ -38,6 +38,7 @@ public class PhotoServiceImpl implements PhotoService {
     @Override
     public PhotoDTO save(PhotoDTO photo) {
         Photo save = photoRepo.save(modelMapper.map(photo, Photo.class));
+        log.info("photo saved {}", save);
         return modelMapper.map(save, PhotoDTO.class);
     }
 

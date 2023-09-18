@@ -45,8 +45,10 @@ public class PhotoController {
        log.info("town id is {}",townId);
         TownDTO town = townService.getTown(townId);
         input.setTown(town);
-        return Mono.just(
-                photoService.save(input));
+        PhotoDTO save = photoService.save(input);
+        log.info("photo saved {}",save);
+        return Mono.just(save
+);
     }
 
     public Mono<PhotoDTO> updatePhoto(@Argument PhotoDTO input){
