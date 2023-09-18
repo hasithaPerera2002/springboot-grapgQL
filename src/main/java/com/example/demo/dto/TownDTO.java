@@ -17,8 +17,7 @@ public class TownDTO {
 
     private String description;
 
-    @ToString.Exclude
-    private List<ActivityDTO>activityDTOS;
+
 
     @ToString.Exclude
     private List<PhotoDTO> photos;

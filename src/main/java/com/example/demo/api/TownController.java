@@ -1,7 +1,10 @@
 package com.example.demo.api;
 
+import com.example.demo.dto.PhotoDTO;
 import com.example.demo.dto.TownDTO;
+import com.example.demo.service.PhotoService;
 import com.example.demo.service.TownService;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.*;
@@ -11,7 +14,9 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 
 @Controller
@@ -19,13 +24,16 @@ import java.util.UUID;
 public class TownController  {
 
     private final TownService townService;
+    private final PhotoService photoService;
 
     @Autowired
-    public TownController(TownService townService) {
+    public TownController(TownService townService, PhotoService photoService) {
+        this.photoService = photoService;
+
         this.townService = townService;
     }
 
-    @BatchMapping(typeName = "Town")
+    @QueryMapping
     public Flux<TownDTO> towns() {
         List<TownDTO> all = townService.getAll();
         log.info("Fetching all towns{}",all);
@@ -49,9 +57,16 @@ public class TownController  {
     }
 
     @QueryMapping
-    public Mono<TownDTO> getTownById(@Argument String id) {
+    public Mono<TownDTO> getTownById(@Argument UUID id) {
         System.out.println(id);
-        return Mono.just(townService.getTown(UUID.fromString(id)));
+        return Mono.just(townService.getTown(id));
+    }
+    @BatchMapping
+    Map<TownDTO,List<PhotoDTO>>photos(List<TownDTO> towns){
+        log.info("Fetching photos for towns");
+        System.out.println("towns---------------------------------");
+        return towns.stream().collect(Collectors.toMap(town -> town,
+                town -> photoService.photosByTownId(town.getTownId())));
     }
 
 }

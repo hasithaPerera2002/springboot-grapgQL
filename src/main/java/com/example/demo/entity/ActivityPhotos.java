@@ -29,7 +29,7 @@ public class ActivityPhotos {
 
     private String caption;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "activityId")
     private Activity activity;
 }

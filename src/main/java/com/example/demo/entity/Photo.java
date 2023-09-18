@@ -33,7 +33,7 @@ import java.util.UUID;
 
         private String caption;
 
-        @ManyToOne
+        @ManyToOne(cascade = CascadeType.ALL)
         @JoinColumn(name = "townId")
         private Town town;
 

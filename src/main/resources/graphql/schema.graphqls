@@ -20,14 +20,14 @@ type Photo {
     destination: String!
     description: String!
     caption: String!
-    town: Town!
+
 }
 input PhotoInput{
     image: String!
     destination: String!
     description: String!
     caption: String!
-    town:TownInput !
+
 
 }
 input UpdatePhotoInput{
@@ -70,8 +70,8 @@ type ActivityPhoto {
 }
 
 type Mutation{
-    addPhoto(input:PhotoInput):Photo!
-    addTown(input:TownInput):Town!
+    addPhoto(input:PhotoInput,townId:ID!):Photo!
+    addTown(input:TownInput!):Town!
     deleteTown(id:ID):Boolean!
     deletePhoto(id:ID):Boolean!
     updatePhoto(input:UpdatePhotoInput):Photo!

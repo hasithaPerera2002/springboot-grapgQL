@@ -26,6 +26,6 @@ public class PhotoDTO {
 
     private String caption;
 
-    @ToString.Exclude
+
     private TownDTO town;
 }

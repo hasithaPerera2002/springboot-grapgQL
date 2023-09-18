@@ -9,11 +9,12 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
+import java.util.UUID;
 
 
 public interface PhotoService {
 
-       List<PhotoDTO> photosByTownId (String town);
+       List<PhotoDTO> photosByTownId (UUID town);
        PhotoDTO save (PhotoDTO photo);
 
        PhotoDTO update (PhotoDTO photo);

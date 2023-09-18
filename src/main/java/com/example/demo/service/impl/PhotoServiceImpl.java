@@ -9,7 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import reactor.core.publisher.Mono;
 
 import java.util.List;
 import java.util.UUID;
@@ -31,8 +30,8 @@ public class PhotoServiceImpl implements PhotoService {
     }
 
     @Override
-    public List<PhotoDTO> photosByTownId(String town) {
-        return photoRepo.findAllByTownTownId(UUID.fromString(town)).stream().map(photo -> modelMapper.map(photo, PhotoDTO.class)).
+    public List<PhotoDTO> photosByTownId(UUID town) {
+        return photoRepo.findAllByTownTownId(town).stream().map(photo -> modelMapper.map(photo, PhotoDTO.class)).
                 collect(Collectors.toList());
     }
 

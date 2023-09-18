@@ -4,7 +4,11 @@ import com.coxautodev.graphql.tools.GraphQLMutationResolver;
 import com.coxautodev.graphql.tools.GraphQLQueryResolver;
 import com.example.demo.dto.PhotoDTO;
 
+import com.example.demo.dto.TownDTO;
 import com.example.demo.service.PhotoService;
+import com.example.demo.service.TownService;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.*;
 import org.springframework.stereotype.Component;
@@ -14,25 +18,35 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
+import java.util.UUID;
 
 @Controller
+@Slf4j
 public class PhotoController {
 
     private final PhotoService photoService;
 
+    private final TownService townService;
+
     @Autowired
-    public PhotoController(PhotoService photoService){
+    public PhotoController(PhotoService photoService, TownService townService){
         this.photoService = photoService;
+        this.townService = townService;
     }
 
-    @BatchMapping(typeName = "Photo")
+    @QueryMapping
     public Flux<PhotoDTO>photos(){
         List<PhotoDTO> all = photoService.getAll();
         return Flux.fromIterable(all);
     }
     @MutationMapping
-    public Mono<PhotoDTO> addPhoto(@Argument PhotoDTO input){
-        return Mono.just(photoService.save(input));
+
+    public Mono<PhotoDTO> addPhoto(@Argument PhotoDTO input,@Argument UUID townId){
+       log.info("town id is {}",townId);
+        TownDTO town = townService.getTown(townId);
+        input.setTown(town);
+        return Mono.just(
+                photoService.save(input));
     }
 
     public Mono<PhotoDTO> updatePhoto(@Argument PhotoDTO input){
@@ -45,7 +59,7 @@ public class PhotoController {
     }
     @QueryMapping
     public Flux<PhotoDTO> photosByTownId(@Argument String town){
-        List<PhotoDTO> photoDTOS = photoService.photosByTownId(town);
+        List<PhotoDTO> photoDTOS = photoService.photosByTownId(UUID.fromString(town));
         return Flux.fromIterable(photoDTOS);
     }
     @QueryMapping

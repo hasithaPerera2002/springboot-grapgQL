@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -29,7 +30,11 @@ public class TownServiceImpl implements TownService {
 
     @Override
     public TownDTO getTown(UUID id) {
-      return modelMapper.map(townRepo.findTownByTownId(id),TownDTO.class);
+        Town townByTownId = townRepo.findTownByTownId(id);
+        //return modelMapper.map(townRepo.findTownByTownId(id),TownDTO.class);
+        log.info("town by id is {}",townByTownId);
+        System.out.println(townByTownId );
+        return modelMapper.map(townByTownId,TownDTO.class);
     }
 
     @Override
