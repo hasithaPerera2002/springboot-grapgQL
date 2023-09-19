@@ -22,8 +22,8 @@ public  class ActivityPhotoServiceImpl implements ActivityPhotoService {
         this.modelMapper = modelMapper;
     }
     @Override
-    public ActivityPhotosDTO addPhoto(ActivityPhotosDTO activityPhotosDTO) {
-        ActivityPhotos save = activityPhotoRepo.save(modelMapper.map(activityPhotosDTO, ActivityPhotos.class));
+    public ActivityPhotosDTO addPhoto(ActivityPhotosDTO input) {
+        ActivityPhotos save = activityPhotoRepo.save(modelMapper.map(input, ActivityPhotos.class));
         return modelMapper.map(save, ActivityPhotosDTO.class);
     }
 

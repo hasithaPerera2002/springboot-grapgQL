@@ -1,11 +1,3 @@
-type Query {
-    towns: [Town]!
-    photos:[Photo]!
-    townsNames:Town
-    getTownById(id:ID):Town
-    photoById(id:ID!):Photo
-    photosByTownId(id:ID!):[Photo]
-}
 
 type Town {
     townId: ID!
@@ -20,6 +12,7 @@ type Photo {
     destination: String!
     description: String!
     caption: String!
+    town: Town
 
 }
 input PhotoInput{
@@ -27,8 +20,6 @@ input PhotoInput{
     destination: String!
     description: String!
     caption: String!
-
-
 }
 input UpdatePhotoInput{
 
@@ -53,7 +44,7 @@ input TownUpdateInput{
 
 }
 type Activity{
-    activityId:ID!
+    activityId:ID
     activityName:String!
     activityDescription:String!
     town:Town!
@@ -68,6 +59,18 @@ type ActivityPhoto {
     caption:String!
 
 }
+input ActivityInput{
+    activityName:String!
+    activityDescription:String!
+    contactNo:String!
+    address:String!
+    activityPhotos:[ActivityPhotoInput!]
+}
+input ActivityPhotoInput{
+    image:String!
+    caption:String!
+}
+
 
 type Mutation{
     addPhoto(input:PhotoInput,townId:ID!):Photo!
@@ -76,6 +79,25 @@ type Mutation{
     deletePhoto(id:ID):Boolean!
     updatePhoto(input:UpdatePhotoInput):Photo!
     updateTown(input:TownUpdateInput):ID!
+    addActivity(input:ActivityInput,townId:ID!):Activity!
+    addActivityPhoto(input:ActivityPhotoInput,activityId:ID!):ActivityPhoto!
+    deleteActivity(id:ID):Boolean!
+    deleteActivityPhoto(id:ID):Boolean!
+    updateActivity(input:ActivityInput):Activity!
+    updateActivityPhoto(input:ActivityPhotoInput):ActivityPhoto!
 
+}
+type Query {
+    towns: [Town]!
+    photos:[Photo]!
+    townsNames:Town
+    getTownById(id:ID):Town
+    photoById(id:ID!):Photo
+    photosByTownId(id:ID!):[Photo]
+    getActivityById(id:ID!):Activity!
+    getActivityByTownId(id:ID!):[Activity]!
+    activities:[Activity]!
+    getActivityPhotoById(id:ID!):ActivityPhoto!
+    getActivityPhotosByActivityId(id:ID!):[ActivityPhoto]!
 
 }

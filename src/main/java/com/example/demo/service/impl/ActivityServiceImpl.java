@@ -30,7 +30,7 @@ public class ActivityServiceImpl implements ActivityService {
 
     @Override
     public ActivityDTO getActivityById(UUID id) {
-        return modelMapper.map(activityRepo.findById(id), ActivityDTO.class);
+        return modelMapper.map(activityRepo.getReferenceById(id), ActivityDTO.class);
     }
 
     @Override

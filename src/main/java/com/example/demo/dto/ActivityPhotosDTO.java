@@ -15,9 +15,7 @@ public class ActivityPhotosDTO {
 
     private String image;
 
-
-
     private String caption;
 
-
+    private ActivityDTO activityDTO;
 }
